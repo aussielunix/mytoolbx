@@ -1,0 +1,11 @@
+curl
+flatpak-xdg-utils
+git
+gnupg2
+jq
+keyutils
+tree
+unzip
+zip
+zsh
+
