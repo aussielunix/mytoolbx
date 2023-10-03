@@ -26,3 +26,8 @@ These images are signed with sisgstore's [cosign](https://docs.sigstore.dev/cosi
 ```bash
 cosign verify --key cosign.pub ghcr.io/aussielunix/mytoolbx
 ```
+
+## TODO
+
+* Add owncloud client appimage
+
