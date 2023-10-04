@@ -17,7 +17,6 @@ toolbox create -i ghcr.io/aussielunix/mytoolbx:latest -c mytoolbx
 toolbox enter mytoolbx
 ```
 
-:TODO: how to update toolbx container
 
 ## Verification
 
@@ -29,5 +28,10 @@ cosign verify --key cosign.pub ghcr.io/aussielunix/mytoolbx
 
 ## TODO
 
-* Add owncloud client appimage
+* Document how to update toolbx container
+* add aws-cli
+* add aws-vault
+* create dedicated owncloud-client toolbox
+* create dedicated dropbox-client toolbox
+
 

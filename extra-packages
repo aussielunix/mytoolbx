@@ -1,3 +1,6 @@
+autoconf
+automake
+build-essential
 bzip2
 curl
 direnv
@@ -6,7 +9,11 @@ git
 gnupg2
 jq
 keyutils
+libtool
 plocate
+python3-pip
+python3-pip-whl
+python3-wheel
 tree
 unzip
 vim
