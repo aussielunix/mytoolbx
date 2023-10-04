@@ -10,6 +10,7 @@ gnupg2
 jq
 keyutils
 libtool
+mc
 plocate
 python3-pip
 python3-pip-whl
