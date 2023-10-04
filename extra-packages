@@ -6,6 +6,7 @@ git
 gnupg2
 jq
 keyutils
+plocate
 tree
 unzip
 vim
