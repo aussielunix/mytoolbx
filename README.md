@@ -28,10 +28,12 @@ cosign verify --key cosign.pub ghcr.io/aussielunix/mytoolbx
 
 ## TODO
 
+* create dedicated owncloud-client toolbox
+
 * Document how to update toolbx container
 * add aws-cli
 * add aws-vault
-* create dedicated owncloud-client toolbox
 * create dedicated dropbox-client toolbox
-
+* refine this repo - see link for inspo.
+  * https://github.com/duhdugg/custom-toolboxes/blob/main/variants/ubuntu/fs/build/install.sh
 
