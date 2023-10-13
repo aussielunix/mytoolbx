@@ -7,33 +7,16 @@ LABEL com.github.containers.toolbox="true" \
       summary="Base image for creating Ubuntu toolbox containers" \
       maintainer="Mick Pollard <mick@aussielunix.io>"
 
-# Remove apt configuration optimized for containers
-# Remove docker-gzip-indexes to help with "command-not-found"
-RUN rm /etc/apt/apt.conf.d/docker-gzip-indexes /etc/apt/apt.conf.d/docker-no-languages
-
-# Enable myhostname nss plugin for clean hostname resolution without patching
-# hosts (at least for sudo), add it right after 'files' entry. We expect that
-# this entry is not present yet. Do this early so that package postinst (which
-# adds it too late in the order) skips this step
-RUN sed -Ei 's/^(hosts:.*)(\<files\>)\s*(.*)/\1\2 myhostname \3/' /etc/nsswitch.conf
-
-# Restore documentation but do not upgrade all packages
-# Install ubuntu-minimal & ubuntu-standard
 # Install extra packages as well as libnss-myhostname
 COPY extra-packages /
-RUN sed -Ei '/apt-get (update|upgrade)/s/^/#/' /usr/local/sbin/unminimize && \
-    apt-get update && \
-    yes | /usr/local/sbin/unminimize && \
-    DEBIAN_FRONTEND=noninteractive apt-get -y install \
-        ubuntu-minimal ubuntu-standard \
-        libnss-myhostname \
-        $(cat extra-packages | xargs) && \
-    rm -rd /var/lib/apt/lists/*
+
+RUN sed -Ei '/apt-get (update|upgrade)/s/^/#/' /usr/local/sbin/unminimize \
+    && apt-get update -yq \
+    && apt-get -yq dist-upgrade \
+    && DEBIAN_FRONTEND=noninteractive apt-get -yq install \
+      libnss-myhostname \
+      $(cat extra-packages | xargs) \
+    && yes | /usr/local/sbin/unminimize && echo '' \
+    && apt-get clean
 RUN rm /extra-packages
-
-# Fix empty bind-mount to clear selinuxfs (see #337)
-RUN mkdir /usr/share/empty
-
-# Add flatpak-spawn to /usr/bin
-RUN ln -s /usr/libexec/flatpak-xdg-utils/flatpak-spawn /usr/bin/
 
