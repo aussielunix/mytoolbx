@@ -12,6 +12,7 @@ keyutils
 libtool
 mc
 plocate
+pwgen
 python3-pip
 python3-pip-whl
 python3-wheel
