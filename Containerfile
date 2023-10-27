@@ -14,9 +14,11 @@ RUN sed -Ei '/apt-get (update|upgrade)/s/^/#/' /usr/local/sbin/unminimize \
     && apt-get update -yq \
     && apt-get -yq dist-upgrade \
     && DEBIAN_FRONTEND=noninteractive apt-get -yq install \
-      libnss-myhostname \
+      libnss-myhostname ubuntu-minimal ubuntu-standard \
       $(cat extra-packages | xargs) \
     && yes | /usr/local/sbin/unminimize && echo '' \
     && apt-get clean
 RUN rm /extra-packages
 
+# Fix empty bind-mount to clear selinuxfs (see #337)
+RUN mkdir /usr/share/empty
