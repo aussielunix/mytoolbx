@@ -10,6 +10,9 @@ LABEL com.github.containers.toolbox="true" \
 # Install extra packages as well as libnss-myhostname
 COPY extra-packages /
 
+# Install custom CA cert
+COPY aussielunix_Root_CA_168848365996868199089383065266162030969.crt /usr/local/share/ca-certificates/
+
 RUN sed -Ei '/apt-get (update|upgrade)/s/^/#/' /usr/local/sbin/unminimize \
     && apt-get update -yq \
     && apt-get -yq dist-upgrade \
@@ -17,8 +20,7 @@ RUN sed -Ei '/apt-get (update|upgrade)/s/^/#/' /usr/local/sbin/unminimize \
       libnss-myhostname ubuntu-minimal ubuntu-standard \
       $(cat extra-packages | xargs) \
     && yes | /usr/local/sbin/unminimize && echo '' \
-    && apt-get clean
-RUN rm /extra-packages
-
-# Fix empty bind-mount to clear selinuxfs (see #337)
-RUN mkdir /usr/share/empty
+    && apt-get clean \
+    && rm /extra-packages \
+    && mkdir /usr/share/empty \
+    && update-ca-certificates --verbose --fresh
