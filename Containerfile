@@ -13,14 +13,21 @@ COPY extra-packages /
 # Install custom CA cert
 COPY aussielunix_Root_CA_168848365996868199089383065266162030969.crt /usr/local/share/ca-certificates/
 
-RUN sed -Ei '/apt-get (update|upgrade)/s/^/#/' /usr/local/sbin/unminimize \
-    && apt-get update -yq \
-    && apt-get -yq dist-upgrade \
-    && DEBIAN_FRONTEND=noninteractive apt-get -yq install \
-      libnss-myhostname ubuntu-minimal ubuntu-standard \
-      $(cat extra-packages | xargs) \
-    && yes | /usr/local/sbin/unminimize && echo '' \
+# update apt and install ca-certificates and dist-upgrade
+RUN DEBIAN_FRONTEND=noninteractive apt-get update -yq && \
+    DEBIAN_FRONTEND=noninteractive apt-get -yq install ca-certificates apt-utils && \
+    DEBIAN_FRONTEND=noninteractive apt-get -yq dist-upgrade
+
+# Install Hashicorp apt signing key and apt repo
+COPY hashicorp-apt-keyring.gpg /etc/apt/keyrings/hashicorp-apt-keyring.gpg
+COPY hashicorp-apt-repo.list /etc/apt/sources.list.d/hashicorp.list
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get update -yq && \
+    DEBIAN_FRONTEND=noninteractive apt-get -yq install \
+    libnss-myhostname ubuntu-minimal ubuntu-standard \
+    $(cat extra-packages | xargs) \
+    && yes | /usr/local/sbin/unminimize \
+    && echo '' \
     && apt-get clean \
     && rm /extra-packages \
-    && mkdir /usr/share/empty \
     && update-ca-certificates --verbose --fresh
