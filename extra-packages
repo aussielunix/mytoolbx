@@ -1,5 +1,7 @@
 brew
-gawk
+direnv
 eza
+gawk
 sed
 sudo-rs
+vim
