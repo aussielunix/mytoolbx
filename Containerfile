@@ -34,4 +34,3 @@ RUN curl https://raw.githubusercontent.com/rcaloras/bash-preexec/master/bash-pre
     mkdir -p /usr/share/ && \
     cp /tmp/bash-prexec /usr/share/bash-prexec && \
     rm -rf /tmp/*
-
