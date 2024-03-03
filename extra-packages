@@ -1,7 +1,9 @@
 brew
+ca-certificates-bundle
 direnv
 eza
 gawk
+go
 sed
 sudo-rs
 vim
