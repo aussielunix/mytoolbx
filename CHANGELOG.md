@@ -11,7 +11,7 @@
 
 ## 2024-01-29
 
-- Migrate to using a minimalist [Wolfi OS)[https://github.com/chainguard-images/images/tree/main/images/wolfi-base] base image
+- Migrate to using a minimalist [Wolfi OS](https://github.com/chainguard-images/images/tree/main/images/wolfi-base) base image
 - Homebrew is pre-installed
 - Image is kept small with all custom packages now installed at runtime with Homebrew
 - Add vim and direnv to image
