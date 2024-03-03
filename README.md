@@ -1,22 +1,21 @@
 # mytoolbx
 
-**Continuously deliver my toolbx container image**
+**Continuously deliver my daily driver Linux terminal environment**
 
-A Containerfile and GitHub action for continuously building and publishing my Toolbx images to be used with [toolbx](https://containertoolbx.org/)
+A Containerfile and GitHub action for continuously building and publishing my daily driver Linux terminal environment.  
+This OCI container image is to be run as a [distrobox](https://github.com/89luca89/distrobox) using [podman](https://podman.io/) and a systemd [quadlet](https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html)
 
-This image is going to experiment with what a "born from cloud native" UNIX terminal experience would look like.
-
-- Starts with the latest Ubuntu 22.04 image from the [Toolbx Community Images](https://github.com/toolbx-images/images)
-- Adds some quality of life
-  - `python3`
+- Starts with the minimalist [Wolfi OS](https://github.com/chainguard-images/images/tree/main/images/wolfi-base)
+- adds Homebrew (for Linux)
+- adds my custom CA Cert
+- adds a few native packages - remember most packages will be installed using homebrew at runtime
 
 ## How to use
 
-```bash
-toolbox create -i ghcr.io/aussielunix/mytoolbx:latest -c mytoolbx
-toolbox enter mytoolbx
-```
-
+- Drop a systemd [quadlet](https://github.com/ublue-os/toolboxes/blob/main/quadlets/wolfi-toolbox/wolfi-dx-distrobox-quadlet.container) file into `~/.config/containers/systemd`
+- `systemctl --user daemon-reload`
+- `systemctl --user enable --now container-mytoolbx.service`  # name of the service matches the quadlet file with the suffix of `.container` replaced with `.service`
+- To get automatic updates you will need to enable `podman-auto-update.timer` which by default will auto-update at midnight
 
 ## Verification
 
@@ -25,15 +24,4 @@ These images are signed with sisgstore's [cosign](https://docs.sigstore.dev/cosi
 ```bash
 cosign verify --key cosign.pub ghcr.io/aussielunix/mytoolbx
 ```
-
-## TODO
-
-* create dedicated owncloud-client toolbox
-
-* Document how to update toolbx container
-* add aws-cli
-* add aws-vault
-* create dedicated dropbox-client toolbox
-* refine this repo - see link for inspo.
-  * https://github.com/duhdugg/custom-toolboxes/blob/main/variants/ubuntu/fs/build/install.sh
 
