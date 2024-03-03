@@ -25,3 +25,6 @@ These images are signed with sisgstore's [cosign](https://docs.sigstore.dev/cosi
 cosign verify --key cosign.pub ghcr.io/aussielunix/mytoolbx
 ```
 
+## Attribution
+
+This would not be possible without the work being done in the [Universal Blue](https://github.com/ublue-os/toolboxes/tree/main/toolboxes/wolfi-toolbox) project.
