@@ -24,13 +24,10 @@ COPY aussielunix_Root_CA_168848365996868199089383065266162030969.crt /
 RUN cat /aussielunix_Root_CA_168848365996868199089383065266162030969.crt >> /etc/ssl/certs/ca-certificates.crt \
 	&& rm -f /aussielunix_Root_CA_168848365996868199089383065266162030969.crt
 
-# Patch /usr/bin/entrypoint
-#RUN sed -i '/missing_packages=0/,/# Workaround for when sudo is missing,/ s/^/#/' /usr/bin/entrypoint && \
-#    sed -i '/elif command -v apt-get/,/# Set SHELL to the install path inside the container/ s/^/#/' /usr/bin/entrypoint && \
-#    sed -i '/# Set SHELL to the install path inside the container/a touch /.containersetupdone' /usr/bin/entrypoint
-
-# Use and configure bash, retrieve bash-prexec
-RUN curl https://raw.githubusercontent.com/rcaloras/bash-preexec/master/bash-preexec.sh -o /tmp/bash-prexec && \
-    mkdir -p /usr/share/ && \
-    cp /tmp/bash-prexec /usr/share/bash-prexec && \
-    rm -rf /tmp/*
+# Configure Locales and get bash-prexec
+RUN curl https://raw.githubusercontent.com/rcaloras/bash-preexec/master/bash-preexec.sh -o /tmp/bash-prexec \
+    && mkdir -p /usr/share/ \
+    && cp /tmp/bash-prexec /usr/share/bash-prexec \
+    && printf 'LANG=en_AU.utf8\nexport LANG\n' > /etc/profile.d/locale.sh \
+    && printf 'LANG="en_AU.UTF-8"' > /etc/locale.conf \
+    && rm -rf /tmp/*
