@@ -25,9 +25,9 @@ RUN cat /aussielunix_Root_CA_168848365996868199089383065266162030969.crt >> /etc
 	&& rm -f /aussielunix_Root_CA_168848365996868199089383065266162030969.crt
 
 # Patch /usr/bin/entrypoint
-RUN sed -i '/missing_packages=0/,/# Workaround for when sudo is missing,/ s/^/#/' /usr/bin/entrypoint && \
-    sed -i '/elif command -v apt-get/,/# Set SHELL to the install path inside the container/ s/^/#/' /usr/bin/entrypoint && \
-    sed -i '/# Set SHELL to the install path inside the container/a touch /.containersetupdone' /usr/bin/entrypoint
+#RUN sed -i '/missing_packages=0/,/# Workaround for when sudo is missing,/ s/^/#/' /usr/bin/entrypoint && \
+#    sed -i '/elif command -v apt-get/,/# Set SHELL to the install path inside the container/ s/^/#/' /usr/bin/entrypoint && \
+#    sed -i '/# Set SHELL to the install path inside the container/a touch /.containersetupdone' /usr/bin/entrypoint
 
 # Use and configure bash, retrieve bash-prexec
 RUN curl https://raw.githubusercontent.com/rcaloras/bash-preexec/master/bash-preexec.sh -o /tmp/bash-prexec && \
