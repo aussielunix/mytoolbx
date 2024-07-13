@@ -25,14 +25,14 @@ RUN cat /aussielunix_Root_CA_168848365996868199089383065266162030969.crt >> /etc
 	&& rm -f /aussielunix_Root_CA_168848365996868199089383065266162030969.crt
 
 # Get Distrobox-host-exec and host-spawn
-RUN git clone https://github.com/89luca89/distrobox.git --single-branch /tmp/distrobox && \
-    cp /tmp/distrobox/distrobox-host-exec /usr/bin/distrobox-host-exec && \
-    cp /tmp/distrobox/distrobox-export /usr/bin/distrobox-export && \
-    cp /tmp/distrobox/distrobox-init /usr/bin/entrypoint && \
-    wget https://github.com/1player/host-spawn/releases/download/$(cat /tmp/distrobox/distrobox-host-exec | grep host_spawn_version= | cut -d "\"" -f 2)/host-spawn-$(uname -m) -O /usr/bin/host-spawn && \
-    chmod +x /usr/bin/host-spawn && \
-    rm -drf /tmp/distrobox && \
-    ln -fs /bin/sh /usr/bin/sh
+##RUN git clone https://github.com/89luca89/distrobox.git --single-branch /tmp/distrobox && \
+##    cp /tmp/distrobox/distrobox-host-exec /usr/bin/distrobox-host-exec && \
+##    cp /tmp/distrobox/distrobox-export /usr/bin/distrobox-export && \
+##    cp /tmp/distrobox/distrobox-init /usr/bin/entrypoint && \
+##    wget https://github.com/1player/host-spawn/releases/download/$(cat /tmp/distrobox/distrobox-host-exec | grep host_spawn_version= | cut -d "\"" -f 2)/host-spawn-$(uname -m) -O /usr/bin/host-spawn && \
+##    chmod +x /usr/bin/host-spawn && \
+##    rm -drf /tmp/distrobox && \
+##    ln -fs /bin/sh /usr/bin/sh
 
 # Enable password less sudo
 # using sudoers instead of toolbox filename here, so that in case of rootful
@@ -43,9 +43,6 @@ RUN echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/sudoers
 RUN cp -p /etc/os-release /usr/lib/os-release
 
 # Configure Locales and get bash-prexec
-RUN curl https://raw.githubusercontent.com/rcaloras/bash-preexec/master/bash-preexec.sh -o /tmp/bash-prexec \
-    && mkdir -p /usr/share/ \
-    && cp /tmp/bash-prexec /usr/share/bash-prexec \
+RUN mkdir -p /usr/share/ \
     && printf 'LANG=en_AU.utf8\nexport LANG\n' > /etc/profile.d/locale.sh \
-    && printf 'LANG="en_AU.UTF-8"' > /etc/locale.conf \
-    && rm -rf /tmp/*
+    && printf 'LANG="en_AU.UTF-8"' > /etc/locale.conf
