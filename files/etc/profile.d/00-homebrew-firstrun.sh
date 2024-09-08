@@ -36,6 +36,6 @@ if test "$(id -u)" -gt "0"; then
 
   if test ! -f /etc/linuxbrew.firstrun; then
     sudo touch /etc/linuxbrew.firstrun
-    printf "\nMyToolbox first run complete!\n\n"
+    printf "\nBluefin-CLI first run complete!\n\n"
   fi
 fi
