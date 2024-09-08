@@ -1,6 +1,6 @@
 # shellcheck shell=sh
 
-PATH="$PATH:/home/linuxbrew/.linuxbrew/sbin"
+PATH="$PATH:/home/linuxbrew/.linuxbrew/bin"
 export PATH
 HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew"
 export HOMEBREW_REPOSITORY
