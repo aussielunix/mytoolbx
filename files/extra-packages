@@ -4,7 +4,7 @@ bash
 bc
 binutils
 binutils-gold
-brew=4.3.18-r0
+brew
 bubblewrap
 build-base
 busybox
